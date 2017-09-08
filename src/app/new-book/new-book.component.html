@@ -1,0 +1,9 @@
+<div>
+  <div><label>Title:</label> <input #bookTitle></div>
+  <div><label>Author:</label> <input #bookAuthor></div>
+  <div>
+    <button (click)="add(bookTitle.value, bookAuthor.value); bookTitle.value = ''; bookAuthor.value = '';">
+      Add
+    </button>
+  </div>
+</div>
