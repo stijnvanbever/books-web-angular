@@ -18,6 +18,12 @@ export class BooksComponent implements OnInit {
     this.service.getBooks().then(books => this.books = books);
   }
 
+  deleteBook(book: Book): void {
+    this.service.deleteBook(book.id).then(() => {
+      this.books = this.books.filter(b => b !== book)
+    });
+  }
+
   ngOnInit() {
     this.getBooks();
   }

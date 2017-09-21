@@ -13,7 +13,7 @@
       <td>{{book.id}}</td>
       <td>{{book.title}}</td>
       <td>{{book.author}}</td>
-      <td>&nbsp;</td>
+      <td><button (click)="deleteBook(book); $event.stopPropagation()">x</button></td>
     </tr>
   </tbody>
 

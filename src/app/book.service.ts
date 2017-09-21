@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class BookService {
-  private booksUrl = 'http://localhost:8080/api/books';
+  private booksUrl = 'http://localhost:8080/api/book';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) {
@@ -16,8 +16,7 @@ export class BookService {
     return this.http.get(this.booksUrl)
       .toPromise()
       .then(response => {
-        console.log(response);
-        return response.json().data as Book[];
+        return response.json() as Book[];
       })
       .catch(this.handleError);
   }
@@ -28,10 +27,19 @@ export class BookService {
   }
 
   createBook(title: string, author: string): Promise<Book> {
-    return this.http.post(this.booksUrl, JSON.stringify({title: title, author: author}),
+    let book = {title: title, author: author};
+    return this.http.post(this.booksUrl, JSON.stringify(book),
       {headers: this.headers})
       .toPromise()
-      .then(response => response.json().data as Book)
+      .then(response => response.json() as Book)
+      .catch(this.handleError);
+  }
+
+  deleteBook(id: number): Promise<void> {
+    const url = `${this.booksUrl}/${id}`
+    return this.http.delete(url, {headers: this.headers})
+      .toPromise()
+      .then(() => null)
       .catch(this.handleError);
   }
 }
